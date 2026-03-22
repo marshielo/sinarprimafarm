@@ -1,94 +1,191 @@
 "use client";
 
-import React from 'react';
+import React from "react";
+import { getGeneralInquiryUrl } from "@/lib/whatsapp";
+import { SITE_INFO } from "@/lib/siteInfo";
+import { motion, staggerContainer, staggerItem } from "./motion";
+
+const footerNav = [
+  { label: "Beranda", href: "#beranda" },
+  { label: "Produk", href: "#produk" },
+  { label: "Tentang Kami", href: "#tentang" },
+  { label: "Standar Kami", href: "#standar" },
+  { label: "FAQ", href: "#faq" },
+  { label: "Kontak", href: "#kontak" },
+];
+
+const footerProducts = [
+  "Telur Ayam Negeri",
+  "Telur Ayam Kampung",
+  "Telur Puyuh",
+  "Beras Premium",
+  "Minyak Goreng",
+  "Gula Pasir",
+];
 
 export const Footer = () => {
-    return (
-        <footer className="mt-auto bg-card-light dark:bg-[#18140b] border-t border-neutral-light/20 dark:border-neutral-800 font-body">
-            <div className="max-w-7xl mx-auto px-4 py-16 md:px-8 lg:px-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                    {/* Brand Column */}
-                    <div className="lg:col-span-2 flex flex-col space-y-6 pr-0 lg:pr-12">
-                        <div className="flex flex-col">
-                            <h3 className="text-2xl font-bold text-primary tracking-tight font-display">SINAR PRIMA FARM</h3>
-                            <p className="text-sm text-neutral-light dark:text-neutral-400 font-medium tracking-wider mt-1 uppercase">Fresh from the source</p>
-                        </div>
-                        <p className="text-text-secondary dark:text-neutral-400 leading-relaxed max-w-sm">
-                            Menyediakan telur segar berkualitas tinggi dan kebutuhan pokok terpercaya langsung dari peternakan kami untuk keluarga Indonesia.
-                        </p>
-                        <div className="flex items-center gap-3 text-neutral-light dark:text-neutral-400">
-                            <span className="material-symbols-outlined text-[20px]">location_on</span>
-                            <span className="text-sm">Jl. Raya Farm No. 123, Bogor</span>
-                        </div>
-                    </div>
-
-                    {/* Navigation Column */}
-                    <div className="flex flex-col space-y-6">
-                        <h4 className="text-lg font-bold text-text-main dark:text-white font-display">Navigasi</h4>
-                        <ul className="flex flex-col space-y-3">
-                            <li>
-                                <a className="text-text-secondary dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors font-medium inline-flex items-center gap-2 group" href="#">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a className="text-text-secondary dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors font-medium inline-flex items-center gap-2 group" href="#">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    Produk
-                                </a>
-                            </li>
-                            <li>
-                                <a className="text-text-secondary dark:text-neutral-400 hover:text-primary dark:hover:text-primary transition-colors font-medium inline-flex items-center gap-2 group" href="#">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                                    Kontak
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Social Column */}
-                    <div className="flex flex-col space-y-6">
-                        <h4 className="text-lg font-bold text-text-main dark:text-white font-display">Ikuti Kami</h4>
-                        <div className="flex flex-col space-y-4">
-                            <a className="flex items-center gap-3 text-text-secondary dark:text-neutral-400 hover:text-primary transition-colors group" href="#">
-                                <div className="w-10 h-10 rounded-full bg-background-light dark:bg-neutral-800 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
-                                    {/* Facebook Icon SVG */}
-                                    <svg aria-hidden="true" className="w-5 h-5 group-hover:fill-primary fill-current transition-colors" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill="currentColor"></path></svg>
-                                </div>
-                                <span className="font-medium">Facebook</span>
-                            </a>
-                            <a className="flex items-center gap-3 text-text-secondary dark:text-neutral-400 hover:text-primary transition-colors group" href="#">
-                                <div className="w-10 h-10 rounded-full bg-background-light dark:bg-neutral-800 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
-                                    {/* Instagram Icon SVG */}
-                                    <svg aria-hidden="true" className="w-5 h-5 group-hover:fill-primary fill-current transition-colors" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.48 2h-.165zm-1.153 1.153C9.04 3.153 8.7 3.167 7.757 3.21c-1.01.046-1.56.243-1.927.386-.48.188-.823.412-1.18.769-.356.357-.58.7-.769 1.18-.143.367-.34.917-.386 1.927-.043.943.057 1.283-.057 3.655v.232c0 2.372.014 2.712.057 3.655.046 1.01.243 1.56.386 1.927.188.48.412.823.769 1.18.357.356.7.58 1.18.769.367.143.917.34 1.927.386.943.043 1.283.057 3.655.057h.232c2.372 0 2.712-.014 3.655-.057 1.01-.046 1.56-.243 1.927-.386.48-.188.823-.412 1.18-.769.356-.357.58-.7.769-1.18.143-.367.34-.917.386-1.927.043-.943.057-1.283.057-3.655v-.232c0-2.372-.014-2.712-.057-3.655-.046-1.01-.243-1.56-.386-1.927-.188-.48-.412-.823-.769-1.18-.357-.356-.7-.58-1.18-.769-.367-.143-.917-.34-1.927-.386-.943-.043-1.283-.057-3.655-.057H11.162zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 1.153a5.009 5.009 0 110 10.018 5.009 5.009 0 010-10.018zm5.992-3.004a.768.768 0 11-1.536 0 .768.768 0 011.536 0z" fill="currentColor"></path></svg>
-                                </div>
-                                <span className="font-medium">Instagram</span>
-                            </a>
-                            <a className="flex items-center gap-3 text-text-secondary dark:text-neutral-400 hover:text-primary transition-colors group" href="#">
-                                <div className="w-10 h-10 rounded-full bg-background-light dark:bg-neutral-800 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
-                                    {/* WhatsApp Icon SVG */}
-                                    <svg aria-hidden="true" className="w-5 h-5 group-hover:fill-primary fill-current transition-colors" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" fill="currentColor"></path></svg>
-                                </div>
-                                <span className="font-medium">WhatsApp</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Copyright */}
-                <div className="border-t border-neutral-light/20 dark:border-neutral-800 mt-16 pt-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-sm text-neutral-light dark:text-neutral-500 text-center md:text-left">
-                            &copy; 2025 Sinar Prima Farm. All rights reserved.
-                        </p>
-                        <div className="flex gap-6">
-                            <a href="#" className="text-sm text-neutral-light dark:text-neutral-500 hover:text-primary transition-colors">Privacy Policy</a>
-                            <a href="#" className="text-sm text-neutral-light dark:text-neutral-500 hover:text-primary transition-colors">Terms of Service</a>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <footer className="mt-auto bg-background-dark font-body">
+      <div className="max-w-7xl mx-auto px-4 py-16 md:px-8 lg:px-16">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-40px" }}
+        >
+          {/* Brand Column */}
+          <motion.div variants={staggerItem} className="flex flex-col space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-white">
+                <span className="material-symbols-outlined text-[22px]">
+                  egg_alt
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-display text-lg font-bold tracking-tight text-white leading-tight">
+                  {SITE_INFO.company.nameShort}
+                </span>
+                <span className="text-[10px] font-medium text-text-secondary-dark tracking-wider uppercase">
+                  Farm
+                </span>
+              </div>
             </div>
-        </footer>
-    );
+            <p className="text-sm text-neutral-light leading-relaxed max-w-xs">
+              {SITE_INFO.company.tagline.charAt(0).toUpperCase() + SITE_INFO.company.tagline.slice(1)} — supplier telur segar dan
+              kebutuhan dapur terpercaya di Banyumas langsung dari peternakan lokal.
+            </p>
+            <div className="flex items-center gap-3 text-neutral-light text-sm">
+              <span className="material-symbols-outlined text-[18px]">
+                location_on
+              </span>
+              <span>{SITE_INFO.location.short}</span>
+            </div>
+            <div className="flex items-center gap-3 text-neutral-light text-sm">
+              <span className="material-symbols-outlined text-[18px]">
+                mail
+              </span>
+              <a
+                href={`mailto:${SITE_INFO.contact.email}`}
+                className="hover:text-primary transition-colors"
+              >
+                {SITE_INFO.contact.email}
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Navigation Column */}
+          <motion.div variants={staggerItem} className="flex flex-col space-y-5">
+            <h4 className="text-base font-bold text-white font-display">
+              Navigasi
+            </h4>
+            <ul className="flex flex-col space-y-3">
+              {footerNav.map((item) => (
+                <li key={item.label}>
+                  <a
+                    className="text-neutral-light hover:text-primary transition-colors text-sm font-medium"
+                    href={item.href}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Products Column */}
+          <motion.div variants={staggerItem} className="flex flex-col space-y-5">
+            <h4 className="text-base font-bold text-white font-display">
+              Produk
+            </h4>
+            <ul className="flex flex-col space-y-3">
+              {footerProducts.map((product) => (
+                <li key={product}>
+                  <a
+                    className="text-neutral-light hover:text-primary transition-colors text-sm font-medium"
+                    href="#produk"
+                  >
+                    {product}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Contact Column */}
+          <motion.div variants={staggerItem} className="flex flex-col space-y-5">
+            <h4 className="text-base font-bold text-white font-display">
+              Kontak
+            </h4>
+            <div className="flex flex-col space-y-3 text-sm text-neutral-light">
+              <a
+                href={`tel:${SITE_INFO.contact.phone}`}
+                className="hover:text-primary transition-colors font-medium"
+              >
+                {SITE_INFO.contact.phoneFormatted}
+              </a>
+              <p>{SITE_INFO.hours.weekday.days}: {SITE_INFO.hours.weekday.open.replace(":", ".")} - {SITE_INFO.hours.weekday.close.replace(":", ".")}</p>
+              <p>{SITE_INFO.hours.weekend.days}: {SITE_INFO.hours.weekend.open.replace(":", ".")} - {SITE_INFO.hours.weekend.close.replace(":", ".")}</p>
+            </div>
+            <a
+              href={getGeneralInquiryUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-white font-bold px-5 py-2.5 rounded-full text-sm hover:bg-primary-dark transition-colors w-fit"
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
+              </svg>
+              WhatsApp
+            </a>
+
+            {/* Social Icons */}
+            <div className="flex gap-3 pt-2">
+              <a
+                href={`mailto:${SITE_INFO.contact.email}`}
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-neutral-light hover:bg-primary hover:text-white transition-colors"
+                aria-label="Email"
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  mail
+                </span>
+              </a>
+              <a
+                href="#"
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-neutral-light hover:bg-primary hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path>
+                </svg>
+              </a>
+              <a
+                href={getGeneralInquiryUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-neutral-light hover:bg-wa-green hover:text-white transition-colors"
+                aria-label="WhatsApp"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path>
+                </svg>
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Copyright */}
+        <div className="border-t border-white/10 mt-14 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-neutral-light text-center md:text-left">
+              &copy; {new Date().getFullYear()} {SITE_INFO.company.name}. All rights reserved.
+            </p>
+            <p className="text-xs text-neutral-light/50">
+              {SITE_INFO.company.tagline.charAt(0).toUpperCase() + SITE_INFO.company.tagline.slice(1)}.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 };
