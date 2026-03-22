@@ -3,48 +3,66 @@
 @theme {
   --font-display: var(--font-inter), sans-serif;
 
-  --color-primary: #f59f0a;
-  --color-primary-light: #fcd34d;
-  --color-primary-dark: #b45309;
-  --color-background-light: #fcfaf8;
-  --color-background-dark: #221c10;
+  --color-primary: #F5B731;
+  --color-primary-light: #FDDA6E;
+  --color-primary-dark: #C48A0A;
+  --color-background-light: #FDFAF6;
+  --color-background-dark: #1A1710;
   --color-neutral-light: #78716c;
   --color-neutral-dark: #1c1917;
 
   --color-card-light: #ffffff;
-  --color-card-dark: #2d261a;
+  --color-card-dark: #262011;
   --color-text-main: #1c160d;
-  --color-text-main-dark: #f4efe7;
-  --color-text-secondary: #9d7e48;
-  --color-text-secondary-dark: #d4b886;
+  --color-text-main-dark: #F5F0E6;
+  --color-text-secondary: #B8922E;
+  --color-text-secondary-dark: #DFC470;
+
+  --color-wa-green: #25d366;
 
   --font-body: var(--font-noto-sans), sans-serif;
 
-  --shadow-soft: 0 4px 6px -1px rgba(245, 159, 10, 0.1), 0 2px 4px -1px rgba(245, 159, 10, 0.06);
-  --shadow-glow: 0 10px 15px -3px rgba(245, 159, 10, 0.2), 0 4px 6px -2px rgba(245, 159, 10, 0.1);
+  --shadow-soft: 0 4px 6px -1px rgba(245, 183, 49, 0.1), 0 2px 4px -1px rgba(245, 183, 49, 0.06);
+  --shadow-glow: 0 10px 15px -3px rgba(245, 183, 49, 0.2), 0 4px 6px -2px rgba(245, 183, 49, 0.1);
 
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
 
   @keyframes fade-in-up {
     from {
       opacity: 0;
       transform: translateY(20px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
+  @keyframes pulse-soft {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+    }
+  }
 }
 
-/* Material Symbols - Custom Font Variation Settings if needed, 
-   but standard class .material-symbols-outlined is handled by the font file usually.
-   The user provided specific settings in style tag. */
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
     'wght' 400,
     'GRAD' 0,
     'opsz' 24
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

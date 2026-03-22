@@ -1,23 +1,31 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
 import { ProductCatalog } from "@/components/ProductCatalog";
-import { Footer } from "@/components/Footer";
+import { Standards } from "@/components/Standards";
 import { AboutUs } from "@/components/AboutUs";
+import { Testimonials } from "@/components/Testimonials";
+import { FAQ } from "@/components/FAQ";
 import { LocationSection } from "@/components/LocationSection";
+import { CTABanner } from "@/components/CTABanner";
+import { Footer } from "@/components/Footer";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <main className="flex-1 w-full bg-background-light dark:bg-background-dark">
-        <Navbar />
         <Hero />
-        <Features />
         <ProductCatalog />
+        <Standards />
         <AboutUs />
+        <Testimonials />
+        <FAQ />
         <LocationSection />
+        <CTABanner />
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </>
   );
 }
