@@ -25,34 +25,17 @@ export const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-start px-6 lg:px-20 py-20">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-start px-6 lg:px-20 pt-32 pb-20">
         <div className="max-w-[720px] flex flex-col gap-6">
-          {/* Brand Name — Highlighted */}
-          <motion.div
-            className="relative inline-flex w-fit flex-col items-start"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 80, damping: 18, delay: 0.3 }}
+          {/* Brand Name */}
+          <motion.p
+            className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold tracking-widest uppercase text-primary"
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ type: "spring", stiffness: 70, damping: 18, delay: 0.3 }}
           >
-            {/* Decorative glow behind */}
-            <div className="absolute -inset-3 bg-primary/10 rounded-2xl blur-xl -z-10" />
-            {/* Brand container with accent borders */}
-            <div className="relative px-5 py-3 sm:px-7 sm:py-4 border-l-4 border-primary bg-white/5 backdrop-blur-sm rounded-r-xl">
-              <p className="font-display text-2xl sm:text-3xl md:text-4xl font-black tracking-wider uppercase text-white">
-                <span className="text-primary">{SITE_INFO.company.nameShort}</span>{" "}
-                <span className="text-white/90">Farm</span>
-              </p>
-              <motion.div
-                className="mt-2 h-1 bg-gradient-to-r from-primary via-primary-light to-transparent rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-              />
-              <p className="mt-1.5 text-xs sm:text-sm font-medium tracking-widest uppercase text-white/50">
-                {SITE_INFO.company.tagline}
-              </p>
-            </div>
-          </motion.div>
+            {SITE_INFO.company.nameShort}
+          </motion.p>
 
           {/* Main Heading */}
           <motion.h1
