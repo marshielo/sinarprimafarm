@@ -9,14 +9,19 @@ import { LocationSection } from "@/components/LocationSection";
 import { CTABanner } from "@/components/CTABanner";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { getProducts } from "@/lib/products";
+
+export const dynamic = "force-dynamic";
 
 export default function Home() {
+  const products = getProducts();
+
   return (
     <>
       <Navbar />
       <main className="flex-1 w-full bg-background-light dark:bg-background-dark">
         <Hero />
-        <ProductCatalog />
+        <ProductCatalog products={products} />
         <Standards />
         <AboutUs />
         <Testimonials />

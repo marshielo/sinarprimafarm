@@ -2,34 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import { getProductOrderUrl } from "@/lib/whatsapp";
+import type { Product } from "@/lib/types";
 
-type ProductFeature = {
-  icon: string;
-  title: string;
-  description: string;
-};
-
-export type ProductDetails = {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  unit: string;
-  image: string;
-  category: string;
-  isBestSeller?: boolean;
-  alt: string;
-  rating?: number;
-  features?: ProductFeature[];
-  grade?: string;
-  minOrder?: string;
-  stockStatus?: string;
-};
+// Re-export for backwards compatibility
+export type ProductDetails = Product;
 
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
-  product: ProductDetails | null;
+  product: Product | null;
 }
 
 export const ProductModal = ({ isOpen, onClose, product }: ProductModalProps) => {
