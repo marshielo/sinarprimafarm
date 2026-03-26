@@ -1,44 +1,101 @@
-import fs from "fs";
-import path from "path";
+import { prisma } from "./db";
 import type { Product } from "./types";
 
-const DATA_PATH = path.join(process.cwd(), "data", "products.json");
-
-export function getProducts(): Product[] {
-  const raw = fs.readFileSync(DATA_PATH, "utf-8");
-  return JSON.parse(raw) as Product[];
+// ─── Helpers to map Prisma model → Product type ───
+function toProduct(row: Awaited<ReturnType<typeof prisma.product.findFirst>>): Product | null {
+  if (!row) return null;
+  return {
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    price: row.price,
+    unit: row.unit,
+    category: row.category,
+    image: row.image,
+    alt: row.alt,
+    isBestSeller: row.isBestSeller,
+    isActive: row.isActive,
+    sortOrder: row.sortOrder,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
 }
 
-export function getProductById(id: number): Product | undefined {
-  return getProducts().find((p) => p.id === id);
+// ─── Queries ───
+
+export async function getProducts(): Promise<Product[]> {
+  const rows = await prisma.product.findMany({
+    where: { isActive: true },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+  });
+  return rows.map((r) => toProduct(r)!);
 }
 
-export function saveProducts(products: Product[]): void {
-  fs.writeFileSync(DATA_PATH, JSON.stringify(products, null, 2), "utf-8");
+export async function getAllProducts(): Promise<Product[]> {
+  const rows = await prisma.product.findMany({
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+  });
+  return rows.map((r) => toProduct(r)!);
 }
 
-export function addProduct(product: Omit<Product, "id">): Product {
-  const products = getProducts();
-  const maxId = products.length > 0 ? Math.max(...products.map((p) => p.id)) : 0;
-  const newProduct: Product = { ...product, id: maxId + 1 };
-  products.push(newProduct);
-  saveProducts(products);
-  return newProduct;
+export async function getProductById(id: string): Promise<Product | null> {
+  const row = await prisma.product.findUnique({ where: { id } });
+  return toProduct(row);
 }
 
-export function updateProduct(id: number, data: Partial<Omit<Product, "id">>): Product | null {
-  const products = getProducts();
-  const index = products.findIndex((p) => p.id === id);
-  if (index === -1) return null;
-  products[index] = { ...products[index], ...data };
-  saveProducts(products);
-  return products[index];
+// ─── Mutations ───
+
+export async function addProduct(
+  data: Omit<Product, "id" | "createdAt" | "updatedAt">
+): Promise<Product> {
+  const row = await prisma.product.create({
+    data: {
+      name: data.name,
+      description: data.description,
+      price: data.price,
+      unit: data.unit,
+      category: data.category,
+      image: data.image,
+      alt: data.alt,
+      isBestSeller: data.isBestSeller ?? false,
+      isActive: data.isActive ?? true,
+      sortOrder: data.sortOrder ?? 0,
+    },
+  });
+  return toProduct(row)!;
 }
 
-export function deleteProduct(id: number): boolean {
-  const products = getProducts();
-  const filtered = products.filter((p) => p.id !== id);
-  if (filtered.length === products.length) return false;
-  saveProducts(filtered);
-  return true;
+export async function updateProduct(
+  id: string,
+  data: Partial<Omit<Product, "id" | "createdAt" | "updatedAt">>
+): Promise<Product | null> {
+  try {
+    const row = await prisma.product.update({
+      where: { id },
+      data: {
+        ...(data.name !== undefined && { name: data.name }),
+        ...(data.description !== undefined && { description: data.description }),
+        ...(data.price !== undefined && { price: data.price }),
+        ...(data.unit !== undefined && { unit: data.unit }),
+        ...(data.category !== undefined && { category: data.category }),
+        ...(data.image !== undefined && { image: data.image }),
+        ...(data.alt !== undefined && { alt: data.alt }),
+        ...(data.isBestSeller !== undefined && { isBestSeller: data.isBestSeller }),
+        ...(data.isActive !== undefined && { isActive: data.isActive }),
+        ...(data.sortOrder !== undefined && { sortOrder: data.sortOrder }),
+      },
+    });
+    return toProduct(row);
+  } catch {
+    return null;
+  }
+}
+
+export async function deleteProduct(id: string): Promise<boolean> {
+  try {
+    await prisma.product.delete({ where: { id } });
+    return true;
+  } catch {
+    return false;
+  }
 }

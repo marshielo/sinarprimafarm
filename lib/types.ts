@@ -7,20 +7,25 @@ export type ProductFeature = {
 };
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: string;
   unit: string;
   image: string;
   category: string;
-  isBestSeller?: boolean;
+  isBestSeller: boolean;
+  isActive: boolean;
+  sortOrder: number;
   alt: string;
+  // Optional fields stored as JSON in features column or kept client-side
   rating?: number;
   features?: ProductFeature[];
   grade?: string;
   minOrder?: string;
   stockStatus?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Category = "Semua" | "Aneka Telur" | "Kebutuhan Dapur";
