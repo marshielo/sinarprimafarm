@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProducts, addProduct } from "@/lib/products";
+import { getAllProducts, addProduct } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const products = getProducts();
+  const products = await getAllProducts();
   return NextResponse.json(products);
 }
 
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const product = addProduct({
+    const product = await addProduct({
       name: body.name,
       description: body.description || "",
       price: body.price,
@@ -27,12 +27,9 @@ export async function POST(request: NextRequest) {
       image: body.image || "",
       category: body.category,
       isBestSeller: body.isBestSeller || false,
+      isActive: true,
+      sortOrder: body.sortOrder || 0,
       alt: body.alt || body.name,
-      rating: body.rating,
-      features: body.features || [],
-      grade: body.grade,
-      minOrder: body.minOrder,
-      stockStatus: body.stockStatus,
     });
 
     return NextResponse.json(product, { status: 201 });

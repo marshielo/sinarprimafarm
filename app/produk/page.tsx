@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: `Lihat semua produk ${SITE_INFO.company.name}: Telur Ayam Negeri, Telur Ayam Kampung, Telur Puyuh, Beras, Minyak Goreng & Gula Pasir. Harga terjangkau di Banyumas, Purwokerto & Cilacap.`,
 };
 
-export default function ProdukPage() {
-  const products = getProducts();
+export default async function ProdukPage() {
+  const products = await getProducts();
 
   return <AllProductsClient products={products} />;
 }

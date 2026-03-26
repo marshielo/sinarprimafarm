@@ -8,7 +8,7 @@ import type { Product } from "@/lib/types";
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState<number | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const fetchProducts = async () => {
     const res = await fetch("/api/products");
@@ -19,7 +19,7 @@ export default function AdminPage() {
 
   useEffect(() => { fetchProducts(); }, []);
 
-  const handleDelete = async (id: number, name: string) => {
+  const handleDelete = async (id: string, name: string) => {
     if (!confirm(`Yakin ingin menghapus "${name}"?`)) return;
     setDeleting(id);
     await fetch(`/api/products/${id}`, { method: "DELETE" });

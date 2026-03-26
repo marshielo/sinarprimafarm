@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
+
+const BUCKET = "product-images";
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,20 +29,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const ext = file.name.split(".").pop() || "jpg";
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const ext = file.name.split(".").pop() || "jpg";
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    const { error } = await supabaseAdmin.storage
+      .from(BUCKET)
+      .upload(filename, buffer, {
+        contentType: file.type,
+        upsert: false,
+      });
 
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    if (error) {
+      console.error("Supabase upload error:", error);
+      return NextResponse.json(
+        { error: "Gagal mengunggah file ke storage." },
+        { status: 500 }
+      );
     }
 
-    fs.writeFileSync(path.join(uploadDir, filename), buffer);
+    const { data: urlData } = supabaseAdmin.storage
+      .from(BUCKET)
+      .getPublicUrl(filename);
 
-    return NextResponse.json({ url: `/uploads/${filename}` });
+    return NextResponse.json({ url: urlData.publicUrl });
   } catch {
     return NextResponse.json({ error: "Gagal mengunggah file." }, { status: 500 });
   }

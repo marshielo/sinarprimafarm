@@ -13,8 +13,8 @@ import { getProducts } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-  const products = getProducts();
+export default async function Home() {
+  const products = await getProducts();
 
   return (
     <>

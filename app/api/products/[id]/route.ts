@@ -7,7 +7,7 @@ type RouteParams = { params: Promise<{ id: string }> };
 
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
-  const product = getProductById(Number(id));
+  const product = await getProductById(id);
   if (!product) {
     return NextResponse.json({ error: "Produk tidak ditemukan." }, { status: 404 });
   }
@@ -18,7 +18,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const body = await request.json();
-    const updated = updateProduct(Number(id), body);
+    const updated = await updateProduct(id, body);
     if (!updated) {
       return NextResponse.json({ error: "Produk tidak ditemukan." }, { status: 404 });
     }
@@ -30,7 +30,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 export async function DELETE(_request: NextRequest, { params }: RouteParams) {
   const { id } = await params;
-  const deleted = deleteProduct(Number(id));
+  const deleted = await deleteProduct(id);
   if (!deleted) {
     return NextResponse.json({ error: "Produk tidak ditemukan." }, { status: 404 });
   }

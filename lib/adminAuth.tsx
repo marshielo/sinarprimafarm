@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, createContext, useContext } from "react";
 
-const ADMIN_PASSWORD = "sinarprimasukses2024";
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "";
 const AUTH_KEY = "admin_authenticated";
 
 type AuthContextType = {
